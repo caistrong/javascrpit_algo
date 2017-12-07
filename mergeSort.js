@@ -10,7 +10,7 @@ function mergeSort(arr){
     let mid = Math.floor(arr.length/2)
     var leftArr = arr.slice(0,mid)
     var rightArr = arr.slice(mid)
-    return merge(mergeSort(leftArr),mergeSort(rightArr))
+    return merge(arguments.callee(leftArr),arguments.callee(rightArr))
 }
 
 //把两个已排好序的数组合成一个数组
