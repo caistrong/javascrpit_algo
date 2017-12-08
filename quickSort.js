@@ -1,63 +1,54 @@
 //quickSort in JavaScript By Cai xiao cong
-var a = [34, 203, 3, 746, 200, 984, 198, 764, 9];
+var a = [10, 20, 30, 40, 100, 1, 2, 3, 9];
 
-function swap(arr,leftIndex,rightIndex) {
+function swap(arr, leftIndex, rightIndex) {
+    if (arr[leftIndex] == arr[rightIndex]) return
     var tmp = arr[leftIndex]
-    arr[leftIndex]=arr[rightIndex]
-    arr[rightIndex]=tmp
+    arr[leftIndex] = arr[rightIndex]
+    arr[rightIndex] = tmp
 }
 
 
 //partition(arr,start,end)函数的作用是将arr中的数组分成两份小的在左大的在右，并返回pivot
-function partition(arr,startIndex,endIndex){
-    var pivotIndex = Math.floor((startIndex+endIndex)/2)
-    
-    var i = startIndex,
-        j = endIndex;
-    
-    // 当i++到等于j或者 j--到等于i时停止while循环
-    while(i<=j){
-        //每次循环都先判断i下标所在的值是不是小于pivotIndex下标所在的值
-        //如果一直是则一直循环直到把i移动到一个大于pivot的位置
-        //然后判断j是不是大于pivotIndex下标所在的值，如果也一直是则把j向左直到找到一个小于pivot的位置
-        while(arr[i]<arr[pivotIndex]){
-            i++
-        }
-        while(arr[j]>arr[pivotIndex]){
-            j--
-        }
-        //执行这个代码块时i,j满足 arr[i]>arr[pivot]以及arr[j]<<arr[pivot]
-        if(i<=j){
-            swap(arr,i,j)
-            i++
-            j--
+function partition(arr, startIndex, endIndex) {
+    var pivot = arr[endIndex]
+    //如果pivotIndex不是最后一个，需要先把pivot换到末尾
+    //以下的partition操作需要依赖这个前提条件
+
+    //partitionIndex是最后存放pivot的地方，先初始化为start
+    var partitionIndex = startIndex
+
+    //遍历函数，partitionIndex总是在大于pivot的地方停留等待i遍历到一个小于pivot的地方与其交换
+    //之后partitionIndex继续往前直到下一个大于pivot的地方
+    for (let i = startIndex; i < endIndex; i++) {
+        if (arr[i] < pivot) {
+            swap(arr, partitionIndex, i)
+            partitionIndex++
         }
     }
-    return i;
-    //返回pivot
-    //循环结束后一次partition就完成了
-    //效果是把一个数组分成两部分，中间是pivot左边是小于pivot的part，右边是大于pivot的part
+    //将partitionIndex和pivot所在的endIndex兑换
+    //可以保证partitionIndex前面的都小于pivot,后面都大于pivot
+    swap(arr, partitionIndex, endIndex)
+    return partitionIndex
 }
+
+
 
 //quickSort的作用在于。将arr的start和end之间排好序
-function quickSort(arr ,start,end){
-    if(!arr instanceof Array) return
+function quickSort(arr, start, end) {
+    if (!arr instanceof Array) return
 
-    var startIndex = typeof start == "number"? start:0,//这个逗号忘了加导致了很多问题
-        endIndex = typeof end == "number"? end:arr.length-1
+    //递归出口(如果只剩一个元素则不用排序了)
+    if(end-start<2) return 
+     
+    var startIndex = typeof start == "number" ? start : 0,//这个逗号忘了加导致了很多问题
+        endIndex = typeof end == "number" ? end : arr.length - 1,
+        pivotIndex = partition(arr, startIndex, endIndex)
+
+    arguments.callee(arr, startIndex, pivotIndex - 1)
+    arguments.callee(arr, pivotIndex + 1, endIndex)
     
-    var pivotIndex = partition(arr,startIndex,endIndex)
-    if(arr.length>1){
-        if(startIndex < pivotIndex-1){
-            quickSort(arr,startIndex,pivotIndex-1)
-        }
-        if(pivotIndex < endIndex){
-            quickSort(arr,pivotIndex,endIndex)
-        }
-    }
-    //递归出口
     return arr
-}
-
+ }
 
 console.log(quickSort(a))
