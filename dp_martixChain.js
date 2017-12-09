@@ -1,5 +1,6 @@
 //矩阵连乘问题
 
+//helper
 function creat2dArray(rows,columns){
     let resultArr=new Array(rows)
     for(let i=0;i<rows;i++){
@@ -55,11 +56,11 @@ function martixMultiply(pArr){
             let rightValue = min2d[r][r+l-1]+p[r-1]*p[r+l-1]*p[r+l]
             if(leftValue <rightValue){
                min2d[r][r+l]=leftValue
-               mark[r][r+1]=r
+               mark[r][r+l]=r
             }
             else{
                min2d[r][r+l]=rightValue
-               mark[r][r+1]=r+l-1
+               mark[r][r+l]=r+l-1
             }
 
         }
@@ -67,6 +68,19 @@ function martixMultiply(pArr){
     }
     return mark
 }
+//根据上一部计算结果mark来显示结果
+function traceBack(i,j,markArr){
+    if(i==j) return
+    var k= markArr[i][j]
+    //假设A1A2A3A4
+    //markArr(1,4)=2
+    //则(A1A2)(A3A4)
+    arguments.callee(i,k,markArr)
+    arguments.callee(k+1,j,markArr)
+    console.log("计算"+"A"+i+","+k+"和"+"A"+(k+1)+","+j);
+}
 martixMultiply(p)
 console.log("最小计算次数为:"+min2d[1][4]+"\n")
+console.log(min2d)
 console.log(mark)
+traceBack(1,4,mark)
