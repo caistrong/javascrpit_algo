@@ -12,9 +12,9 @@ class Diamond {
 }
 
 var diamonds=new Array(3)
-diamonds[0]=new Diamond("大米",5,20)
-diamonds[1]=new Diamond("小麦",4,10)
-diamonds[2]=new Diamond("面粉",3,12)
+diamonds[0]=new Diamond("碎-红宝石",5,20)
+diamonds[1]=new Diamond("碎-蓝宝石",4,10)
+diamonds[2]=new Diamond("碎-绿宝石",3,12)
 
 function knapsackGreedy(diamondArr,c){
     if(!diamondArr instanceof Array) return

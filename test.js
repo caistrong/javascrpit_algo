@@ -1,20 +1,54 @@
+// function f1(){
+//     var r=1
+//     f2()
+// }
 
-function creat2dArray(rows,columns){
-    let resultArr=new Array(rows)
-    for(let i=0;i<rows;i++){
-        resultArr[i]=new Array(columns)
+// function f2(){
+//     console.log(r)
+// }
+
+// var r = 2
+// f1()
+
+var r = 2
+
+function f1(){
+    var r=1
+    f2()
+    function f2(){
+        console.log(this.r)
     }
-    return resultArr
 }
 
-var test2 
+f1()
 
-function addValue(v){
-    test2 =creat2dArray(3,3)
+// if(false){
     
-    test2[1][1]=v
+//     let rx = 5
+// }
 
-    return test2
-}
+// function creat2dArray(rows,columns){
+//     let resultArr=new Array(rows)
+//     for(let i=0;i<rows;i++){
+//         resultArr[i]=new Array(columns)
+//     }
+//     return resultArr
+// }
 
-console.log(addValue(4))
+
+
+// function addValue(v){
+//     test2 =creat2dArray(3,3)
+    
+//     test2[1][1]=v
+
+//     return test2
+// }
+
+// var valuePerWeight = new Array(3)
+
+// valuePerWeight.forEach((item,index,array)=>{
+//     array[index] = 1
+// })
+
+// console.log(valuePerWeight)
